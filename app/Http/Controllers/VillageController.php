@@ -18,6 +18,13 @@ class VillageController extends Controller
         $perPage = 10;
         $villages = DB::table('indonesia_villages')->paginate($perPage);
 
+        foreach ($villages as $v) {
+            $meta = $v->meta;
+            $arr = json_decode($meta, true);
+            $v->meta = $arr;
+        }
+        
+
         return response()->json([
             'message' => 'Success get all villages',
             'data' => $villages
